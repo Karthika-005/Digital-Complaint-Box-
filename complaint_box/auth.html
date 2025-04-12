@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login & Signup</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0eafc, #cfdef3);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      width: 900px;
+      max-width: 100%;
+      display: flex;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .form-container {
+      padding: 50px;
+      width: 50%;
+    }
+    .form-container h2 {
+      margin-bottom: 20px;
+    }
+    .form-container input {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    .form-container button {
+      width: 100%;
+      padding: 12px;
+      background: #4a90e2;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .form-container .social-icons {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+    }
+    .form-container .social-icons i {
+      font-size: 18px;
+      margin: 0 10px;
+      cursor: pointer;
+      color: #555;
+    }
+
+    .welcome-container {
+      background: #4a90e2;
+      color: white;
+      width: 50%;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .welcome-container h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .welcome-container button {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
+    /* Style for dropdown */
+.styled-select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  margin: 10px 0 20px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s;
+}
+
+.styled-select:focus {
+  border-color: #97a3e6;
+  outline: none;
+  background-color: #fff;
+}
+.page-title {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background-color:  #4a90e2;
+  color: white;
+  padding: 20px 0;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="page-title">
+    Digital Complaint Box
+  </div>
+
+<div class="container">
+  <!-- Left welcome panel -->
+  <div class="welcome-container">
+    <h1 id="welcome-title">Hello, Welcome!</h1>
+    <p id="welcome-text">Don't have an account?</p>
+    <button id="toggleBtn">Register</button>
+  </div>
+
+  <!-- Right form section -->
+  <div class="form-container">
+    <!-- Login Form -->
+    <form id="loginForm" method="POST" action="login.php">
+
+      <h2>Login</h2>
+      <input type="text" placeholder="email" name="Email" required />
+      <input type="password" placeholder="Password" name="password" required />
+      <input type="text" name="panchayat_name" placeholder="Panchayat Name" required />
+      <select name="role" required class="styled-select">
+        <option value="" disabled selected>Select Role</option>
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+      <a href="#" style="float:right; font-size: 12px;">Forgot password?</a>
+      <button type="submit">Login</button>
+      <div class="social-icons">
+        <i class="fab fa-google"></i>
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-github"></i>
+        <i class="fab fa-linkedin"></i>
+      </div>
+    </form>
+
+    <!-- Signup Form -->
+    <form id="signupForm" class="hidden" method="POST" action="register.php">
+        <h2>Register</h2>
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <input type="text" name="panchayat_name" placeholder="Panchayat Name" required />
+        
+        <select name="role" required class="styled-select">
+            <option value="" disabled selected>Select Role</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        <button type="submit">Sign Up</button>
+      </form>
+      
+  </div>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById("toggleBtn");
+  const loginForm = document.getElementById("loginForm");
+  const signupForm = document.getElementById("signupForm");
+  const welcomeText = document.getElementById("welcome-text");
+  const welcomeTitle = document.getElementById("welcome-title");
+
+  let showSignup = false;
+
+  toggleBtn.addEventListener("click", () => {
+    showSignup = !showSignup;
+    if (showSignup) {
+      loginForm.classList.add("hidden");
+      signupForm.classList.remove("hidden");
+      welcomeTitle.innerText = "Welcome Back!";
+      welcomeText.innerText = "Already have an account?";
+      toggleBtn.innerText = "Login";
+    } else {
+      loginForm.classList.remove("hidden");
+      signupForm.classList.add("hidden");
+      welcomeTitle.innerText = "Hello, Welcome!";
+      welcomeText.innerText = "Don't have an account?";
+      toggleBtn.innerText = "Register";
+    }
+  });
+</script>
+
+</body>
+</html>
